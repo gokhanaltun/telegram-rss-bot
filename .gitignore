@@ -1,8 +1,7 @@
 .idea/
 __pycache__/
 bot/__pycache__/
-schedule/__pycache__/
+db/__pycache__/
 venv/
 .env
 rssBot.db
-celerybeat-schedule

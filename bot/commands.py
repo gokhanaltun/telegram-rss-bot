@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 from telegram import Update
 from telegram.ext import ContextTypes
 
-from database.models import User, Feed, get_session
+from db.models import User, Feed, get_session
 import feedparser
 
 

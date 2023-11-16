@@ -1,15 +1,15 @@
 import os
-
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
+
+load_dotenv()
 
 
 class SingletonDb:
     __engine = None
     __base = None
 
-    load_dotenv()
     __SQLITE_DB = os.getenv("SQLITE_DB")
 
     @classmethod

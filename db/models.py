@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, TEXT, ForeignKey, DATETIME
+from sqlalchemy import Column, Integer, TEXT, ForeignKey
 from sqlalchemy.orm import relationship, sessionmaker
 from .singleton_db import SingletonDb
 
