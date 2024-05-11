@@ -3,14 +3,14 @@ from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 
+
 load_dotenv()
 
 
-class SingletonDb:
+class SingletonDB:
     __engine = None
     __base = None
-
-    __SQLITE_DB = os.getenv("SQLITE_DB")
+    __SQLITE_DB = os.getenv("DB_PATH")
 
     @classmethod
     def get_engine(cls):
@@ -23,3 +23,4 @@ class SingletonDb:
         if cls.__base is None:
             cls.__base = declarative_base()
         return cls.__base
+    
