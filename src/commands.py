@@ -67,12 +67,12 @@ async def rss_url(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         return RSS_URL
 
     try:
-        feed = feedparser.parse(context.args[1])
+        feed = feedparser.parse(url_)
         if "bozo_exception" in feed:
             await update.message.reply_text("Rss url geçerli değil.")
             return RSS_URL
     except Exception as e:
-        await update.message.reply_text(f"URL parse edilmeye çalışılırken bir hata oldu. \n {e}")
+        await update.message.reply_text(f"URL parse edilmeye çalışılırken bir hata oldu. İşlem sonlandırıldı. \n {e}")
         return ConversationHandler.END
 
     with models.get_session() as session:
@@ -92,6 +92,9 @@ async def rss_url(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 async def list_rss(update: Update, context: ContextTypes.DEFAULT_TYPE):
     with models.get_session() as session:
         feeds = session.query(models.Feed).all()
+
+    if len(feeds) == 0:
+        await update.message.reply_text("Hiç RSS kaydı yok.")
 
     for feed in feeds:
         await update.message.reply_text(f"name: {feed.name}\nurl: {feed.url}")
