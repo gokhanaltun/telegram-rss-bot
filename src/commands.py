@@ -95,6 +95,7 @@ async def list_rss(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     if len(feeds) == 0:
         await update.message.reply_text("Hiç RSS kaydı yok.")
+        return
 
     for feed in feeds:
         await update.message.reply_text(f"name: {feed.name}\nurl: {feed.url}")
@@ -106,6 +107,10 @@ async def delete_rss(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     with models.get_session() as session:
         feeds = session.query(models.Feed).all()
+
+    if len(feeds) == 0:
+        await update.message.reply_text("Hiç RSS kaydı yok.")
+        return
 
     for feed in feeds:
         button = InlineKeyboardButton(
@@ -125,6 +130,7 @@ async def select(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     data = query.data.split(":")
     if data[1] == "cancel":
         await query.edit_message_text(text=f"İşlem iptal edildi.")
+        return
 
     keyboard = [
         [InlineKeyboardButton(
@@ -143,6 +149,7 @@ async def confirm(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
     if data[1] == "cancel":
         await query.edit_message_text(text=f"Silme işlemi iptal edildi")
+        return
     else:
         with models.get_session() as session:
             feed = session.query(models.Feed).filter_by(
